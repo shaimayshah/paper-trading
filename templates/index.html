@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block head %} 
+<title class="col-xs-1 center-block">Home</title>
+{% endblock %}
+
+{% block body %} 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Welcome to the Paper Trading Platform.</h1>
+      <p class="lead">Here, you can trade on the US stock market without spending any actual money. 
+          Think you have a strategy that beats others? Try it out here, first. Search for a ticker below.</p>
+          <form action="/" method='POST'>
+              <div class="form-group">
+                <input type="text" name="tick" class="form-control" id="exampleFormControlInput1" placeholder="Ticker">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
+    </div>
+  </div>
+
+{% endblock %}

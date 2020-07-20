@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head %} 
+<title class="col-xs-1 center-block">Search for Ticker</title>
+{% endblock %}
+
+{% block body %} 
+<div class="container">
+    <h1 class="text-center">Search for a Ticker</h1>
+    <form action="/search" method='POST'>
+        <div class="form-group">
+          <input type="text" name="tick" class="form-control" id="exampleFormControlInput1" placeholder="Ticker">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+      </form>
+</div>
+
+{% endblock %}

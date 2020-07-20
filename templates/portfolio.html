@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block head %} 
+<title class="col-xs-1 center-block">View Portfolio</title>
+{% endblock %}
+      {%block search%}
+      <!-- <form class="form-inline" action="/trade/{{ticker}}" method="POST">
+        <input class="form-control mr-sm-2" name="tick" type="search" placeholder="{{ticker}}" aria-label="Search" />
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+      </form> -->
+      {%endblock%}
+{%block body%}
+<div class="container">
+    <h1 class="text-center">Current Portfolio</h1>
+    <h3 class="text-center"><span class="badge badge-success"> Current Portfolio Value: ${{currval}}</span>
+        <span class="badge badge-primary"> Current Cash in Hand: ${{money}}</span></h3>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Ticker</th>
+            <th scope="col">Number of Shares</th>
+            <th scope="col">Average Buy Price</th>
+            <th scope="col">Nominal Value</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Current Value</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for portfolio in portfolios%}
+          <tr>
+            <th scope="row"><a href="/trade/{{portfolio.ticker}}">{{portfolio.ticker}}</a></th>
+            <td>{{portfolio.shares}}</td>
+            <td>{{portfolio.avg_value}}</td>
+            <td>{{portfolio.shares * portfolio.avg_value}}</td>
+            <td>{{prices[portfolio.ticker]}}</td>
+            {%if prices[portfolio.ticker] * portfolio.shares >  portfolio.shares * portfolio.avg_value%}
+            <td class="bg-success">{{prices[portfolio.ticker] * portfolio.shares}}</td>
+            {%else%}
+            <td class="bg-danger">{{prices[portfolio.ticker] * portfolio.shares}}</td>
+          </tr>
+          {%endif%}
+          {%endfor%}
+        </tbody>
+      </table>
+
+      <form action="/search" method='POST'>
+        <div class="form-group text-center">
+          <input type="text" name="tick" class="form-control" id="exampleFormControlInput1" placeholder="Ticker">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+      </form>
+</div>
+{%endblock%}

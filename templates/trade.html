@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block head %} 
+<title class="col-xs-1 center-block">Trading {{ticker}}</title>
+{% endblock %}
+      {%block search%}
+      <form class="form-inline" action="/trade/{{ticker}}" method="POST">
+        <input class="form-control mr-sm-2" name="tick" type="search" placeholder="{{ticker}}" aria-label="Search" />
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      {%endblock%}
+
+  {% block body %} 
+<div class="container">
+    <h1 class="text-center">Trade {{name}} ({{ticker}})</h1>
+    <h3 class="text-center"><span class="badge badge-secondary">{{sentiment}}</span>
+    <span class="badge badge-primary"> Price: {{price}} </span>
+    {%if isOpen == "Closed"%}<span class="badge badge-danger">{{isOpen}}</span>
+    {%else%} <span class="badge badge-success">{{isOpen}}</span>
+    {%endif%}
+    </h3>
+    <img src="{{image}}" class='d-none d-md-none d-lg-block d-sm-none' height="auto" width='auto'/>
+<hr>
+<h2 class ="text-center">Trading</h2>
+{%if maxshares != 0%}
+<h6 class="text-center"><span class="badge badge-secondary"> Owned shares: {{maxshares}} </span>
+  <span class="badge badge-primary"> Avg. Buy Price: {{avg_price}} </span> 
+  <span class="badge badge-secondary"> Nominal Value: {{maxshares * avg_price}} </span> 
+  {%if (maxshares * price) > (maxshares * avg_price) %}
+  <span class="badge badge-success"> Current Value: {{maxshares * price}} </span>
+  {%else%}
+  <span class="badge badge-danger"> Current Value: {{maxshares * price}} </span>
+  {%endif%}
+</h6>
+{%endif%}
+<h5 class='text-center'>Current Cash in Hand: ${{CurrCash}}</h5>
+    <form class='text-center' action="/trade/{{ticker}}/buy/{{(price|float)}}" method="POST">
+      <input type="number" class="form-control my-2" name="shares" id="inputEmail4" min=1 placeholder="{{ticker}}">
+      <button type="submit float-left my-2" class="btn btn-success">Buy</button>
+    </form>    
+    <form class="text-center" action="/trade/{{ticker}}/sell/{{(price|float)}}" method='POST'>
+
+      {%if maxshares == 0%}
+      <input type="number" class="form-control my-2" id="inputEmail4" disabled placeholder="{{ticker}}">
+      {%else%}
+      <input type="number" class="form-control my-2" id="inputEmail4" name="shares" min=1 max={{maxshares}} placeholder="{{ticker}}">
+      {%endif%}
+      <button type="submit float-left my-2" class="btn btn-danger">Sell</button>
+    </form>    
+    
+      <!-- <div class="form-row text-center col-lg-6">
+        
+      </div> -->
+    
+
+
+
+
+</div>
+
+{% endblock %}
